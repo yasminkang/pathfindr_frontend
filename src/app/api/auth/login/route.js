@@ -39,15 +39,37 @@ export async function POST(request) {
       }),
     });
 
-    const data = await response.json();
-
+    // Verifica o status antes de tentar parsear JSON
     if (!response.ok) {
+      let errorMessage = 'Erro ao fazer login';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.detail || errorData.error || errorMessage;
+      } catch (e) {
+        // Se não conseguir parsear JSON, usa a mensagem padrão
+        errorMessage = `Erro ${response.status}: ${response.statusText}`;
+      }
+      
       return Response.json(
         {
           success: false,
-          error: data.detail || 'Erro ao fazer login',
+          error: errorMessage,
         },
         { status: response.status }
+      );
+    }
+
+    // Se chegou aqui, a resposta foi OK
+    const data = await response.json();
+    
+    // Valida se a resposta contém dados válidos
+    if (!data || !data.id_usuario) {
+      return Response.json(
+        {
+          success: false,
+          error: 'Resposta inválida do servidor',
+        },
+        { status: 500 }
       );
     }
 

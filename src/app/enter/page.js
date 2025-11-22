@@ -39,16 +39,22 @@ export default function Enter(){
 
             const data = await response.json();
 
+            // Verifica se houve erro na resposta
             if (!response.ok || !data.success) {
                 setErro(data.error || 'E-mail ou senha inválidos');
                 setCarregando(false);
                 return;
             }
 
-            // Login bem-sucedido - salvar dados do usuário
-            if (data.data) {
-                localStorage.setItem('usuario', JSON.stringify(data.data));
+            // Valida se os dados do usuário estão presentes e válidos
+            if (!data.data || !data.data.id_usuario || !data.data.email_usuario) {
+                setErro('Resposta inválida do servidor. Tente novamente.');
+                setCarregando(false);
+                return;
             }
+
+            // Login bem-sucedido - salvar dados do usuário
+            localStorage.setItem('usuario', JSON.stringify(data.data));
             
             console.log('Login bem-sucedido:', data.data);
             router.push('/home');
