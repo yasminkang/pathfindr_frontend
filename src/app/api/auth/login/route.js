@@ -14,7 +14,16 @@ export async function POST(request) {
     }
 
     // URL do backend FastAPI (Railway ou local)
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+    let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
+    
+    // Garante que a URL tenha protocolo
+    if (backendUrl && !backendUrl.startsWith('http://') && !backendUrl.startsWith('https://')) {
+      backendUrl = `https://${backendUrl}`;
+    }
+    
+    // Remove barra final se houver
+    backendUrl = backendUrl.replace(/\/$/, '');
+    
     const apiUrl = `${backendUrl}/usuarios/login`;
 
     console.log('Chamando backend para login:', apiUrl);
