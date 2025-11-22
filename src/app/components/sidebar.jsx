@@ -1,9 +1,18 @@
+'use client';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from '../styles/sidebar.module.css';
 
 export default function Sidebar() {
+  const router = useRouter();
   const progressPercent = 12;
   const progressWidth = `${165 * (progressPercent / 100)}px`;
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuario');
+    router.push('/enter');
+  };
 
   return (
     <aside className={styles.sidebar}>
@@ -93,6 +102,28 @@ export default function Sidebar() {
               </span>
               <span>Carrinho</span>
             </Link>
+          </li>
+          <li>
+            <button 
+              onClick={handleLogout}
+              className={styles.navItem}
+              style={{
+                background: 'none',
+                border: 'none',
+                width: '100%',
+                textAlign: 'left',
+                cursor: 'pointer',
+                padding: '0.75rem',
+                color: 'inherit',
+                fontSize: 'inherit',
+                fontFamily: 'inherit'
+              }}
+            >
+              <span className={styles.navIcon}>
+                <span style={{ fontSize: '20px' }}>🚪</span>
+              </span>
+              <span>Sair</span>
+            </button>
           </li>
         </ul>
       </div>

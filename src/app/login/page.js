@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from '../styles/login.module.css'
@@ -14,6 +14,21 @@ export default function Login(){
     const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
+
+    // Redireciona se já estiver autenticado
+    useEffect(() => {
+        const usuario = localStorage.getItem('usuario');
+        if (usuario) {
+            try {
+                const usuarioData = JSON.parse(usuario);
+                if (usuarioData && usuarioData.id_usuario) {
+                    router.push('/home');
+                }
+            } catch (error) {
+                localStorage.removeItem('usuario');
+            }
+        }
+    }, [router]);
    
     async function handleSubmit(e) {
         e.preventDefault();
@@ -57,8 +72,30 @@ export default function Login(){
                 return;
             }
 
-            // Cadastro bem-sucedido
+            // Cadastro bem-sucedido - fazer login automático
             console.log('Usuário cadastrado:', data.data);
+            
+            // Após cadastro, fazer login automático
+            try {
+                const loginResponse = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email_usuario: email,
+                        senha_usuario: senha,
+                    }),
+                });
+
+                const loginData = await loginResponse.json();
+                if (loginResponse.ok && loginData.success && loginData.data) {
+                    localStorage.setItem('usuario', JSON.stringify(loginData.data));
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login automático:', error);
+            }
+            
             router.push('/home');
         } catch (error) {
             console.error('Erro ao cadastrar:', error);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from '../styles/login.module.css'
@@ -12,6 +12,21 @@ export default function Enter(){
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
+
+    // Redireciona se já estiver autenticado
+    useEffect(() => {
+        const usuario = localStorage.getItem('usuario');
+        if (usuario) {
+            try {
+                const usuarioData = JSON.parse(usuario);
+                if (usuarioData && usuarioData.id_usuario) {
+                    router.push('/home');
+                }
+            } catch (error) {
+                localStorage.removeItem('usuario');
+            }
+        }
+    }, [router]);
    
     async function handleSubmit(e) {
         e.preventDefault();
