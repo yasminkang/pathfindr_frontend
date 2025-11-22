@@ -22,17 +22,23 @@ export default function ProtectedRoute({ children }) {
 
         const usuario = localStorage.getItem('usuario');
         if (usuario) {
-          // Verifica se os dados são válidos
+          // Verifica se os dados são válidos - verificação rigorosa
           const usuarioData = JSON.parse(usuario);
-          if (usuarioData && usuarioData.id_usuario) {
+          if (usuarioData && 
+              usuarioData.id_usuario && 
+              typeof usuarioData.id_usuario !== 'undefined' &&
+              usuarioData.email_usuario) {
+            // Usuário válido
             setIsAuthenticated(true);
             setIsLoading(false);
           } else {
+            // Dados inválidos, limpar e redirecionar
             localStorage.removeItem('usuario');
             setShouldRedirect(true);
             setIsLoading(false);
           }
         } else {
+          // Sem usuário, redirecionar
           setShouldRedirect(true);
           setIsLoading(false);
         }

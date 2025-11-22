@@ -13,16 +13,28 @@ export default function Enter(){
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
 
-    // Redireciona se já estiver autenticado
+    // Redireciona se já estiver autenticado (apenas se houver dados válidos)
     useEffect(() => {
+        // Só verifica no cliente
+        if (typeof window === 'undefined') return;
+        
         const usuario = localStorage.getItem('usuario');
         if (usuario) {
             try {
                 const usuarioData = JSON.parse(usuario);
-                if (usuarioData && usuarioData.id_usuario) {
-                    router.push('/home');
+                // Verificação mais rigorosa: precisa ter id_usuario E email_usuario
+                if (usuarioData && 
+                    usuarioData.id_usuario && 
+                    typeof usuarioData.id_usuario !== 'undefined' &&
+                    usuarioData.email_usuario) {
+                    // Usuário válido, pode redirecionar
+                    router.replace('/home');
+                } else {
+                    // Dados inválidos, limpar
+                    localStorage.removeItem('usuario');
                 }
             } catch (error) {
+                // Erro ao parsear, limpar
                 localStorage.removeItem('usuario');
             }
         }
