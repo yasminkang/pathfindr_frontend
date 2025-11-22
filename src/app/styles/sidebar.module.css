@@ -1,0 +1,202 @@
+.sidebar {
+  width: 22%; 
+  max-width: 380px; 
+  min-width: 280px; 
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-sizing: border-box; 
+  transition: width 0.3s ease; 
+}
+
+.logo {
+  font-size: clamp(1.5rem, 3vw, 1.8rem);
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.sidebarSearchContainer {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 30px;
+  background-color: #192226;
+}
+
+.sidebarSearchContainer h3 {
+  width: 100%;
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 200;
+  font-style: italic;
+  letter-spacing: 0.7px;
+}
+
+.groupTitle {
+  font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+  text-transform: uppercase;
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  color: #fff;
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+}
+
+.navIcon {
+  width: clamp(20px, 3vw, 24px);
+  height: clamp(20px, 3vw, 24px);
+  border-radius: 50%;
+}
+
+.premiumBtn {
+  padding: 0.875rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(214, 158, 180, .8) 21%, rgba(211, 211, 215, .8) 37%, rgba(133, 189, 211, .8) 64%,  rgba(36, 74, 101, .8) 97%);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  margin-top: auto;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+}
+
+.premiumBtn:hover {
+  background-color: #a0a0a0;
+}
+
+.placeholderBox {
+  width: 100%;
+  height: 220px;
+  border-radius: 0.8rem;
+  margin-top: 0.1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.ProgressImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.progressTitle {
+  position: absolute;
+  bottom: 100px;
+  left: 16px;
+  font-family: 'Almarai-Regular';
+  color: #FFF;
+  font-size: 14px;
+  margin: 0;
+  z-index: 1;
+}
+
+.progressCourse {
+  position: absolute;
+  bottom: 30px; 
+  left: 16px; 
+  font-family: 'Almarai-Regular';
+  color: #F3F4F6; 
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0; 
+  z-index: 1; 
+}
+
+.progressBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  bottom: 10px;
+  left: 16px; 
+  z-index: 1;
+}
+
+.progressBackground {
+  width: 165px;
+  height: 8px;
+  background-color: #FFF;
+  border-radius: 20px;
+  padding: 0 2px;
+  margin-top: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  width: 20px;
+  height: 4px;
+  background-color: #000;
+  border-radius: 20px;
+  margin-top: 2px;
+}
+
+.progressText {
+  font-family: 'Almarai-Regular';
+  color: #FFF;
+  font-size: 12px;
+}
+
+
+@media (min-width: 1920px) {
+  .sidebar {
+    width: 18%;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 28%;
+    min-width: 240px;
+    padding: 1.5rem;
+  }
+  .placeholderBox {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 80px;
+    min-width: auto;
+    padding: 1rem 0.5rem;
+  }
+  .logo span, .groupTitle, .navItem span, .premiumBtn span {
+    display: none;
+  }
+  .navItem {
+    justify-content: center;
+    gap: 0;
+  }
+  .sidebarSearchContainer {
+    display: none;
+  }
+  .premiumBtn {
+    justify-content: center;
+  }
+  .premiumBtn::after {
+    content: "⭐";
+    font-size: 1.2rem;
+  }
+}

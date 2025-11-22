@@ -1,0 +1,192 @@
+.planosContainer {
+  height: 100%;
+  padding: 2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title{
+  font-weight: 500;
+  font-size: 36px;
+  margin-bottom: 40px;
+  letter-spacing: -1;
+}
+
+.planroot{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.planosCard {
+  background-color: #F0F0F0;
+  padding: 4rem 2rem 4rem 2rem;
+  height: auto;
+  width: 460px;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 25px;
+}
+
+.verifyIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.verifyItem {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notVerify {
+  width: 20px;
+  height: 20px;
+  background-color: #D9D9D9;
+  border-radius: 50%;
+}
+
+.infoplan{
+  font-size: 16px;
+}
+
+.infoend{
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 40px;
+  width: 90%;
+}
+
+.plantyperoot{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.planbox{
+  width: 560px;
+  height: 140px;
+  border-radius: 28px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plan1bg{
+  background-image: url(../assets/plan1bg.png);
+  background-size: cover;
+}
+
+.plan2bg{
+  background-image: url(../assets/plan2bg.png);
+  background-size: cover;
+}
+
+.plan3bg{
+  background-image: url(../assets/plan3bg.png);
+  background-size: cover;
+}
+
+.planboxnotselected{
+  background-color: #F0F0F0;
+  width: 560px;
+  height: 140px;
+  border-radius: 28px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selected{
+  height: 35px;
+  width: 35px;
+  margin-top: 35px;
+}
+
+.notselected{
+  background-color: #D9D9D9;
+  height: 35px;
+  width: 35px;
+  margin-top: 35px;
+  border-radius: 50%;
+}
+
+.themeplan{
+  color: #FFF;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-align: start;
+}
+
+.typeplan{
+  color: #FFF;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.themeplannotselected{
+  color: #000;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-align: start;
+  
+}
+
+.typeplannotselected{
+  color: #000;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.moneybox{
+  display: flex;
+  align-items: end;
+}
+
+.moneyicon{
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #000;
+}
+
+.moneyiconnotselected{
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #FFF;
+}
+
+.moreButton{
+  margin-top: 2rem;
+  padding: 0.9rem 3.5rem;
+  background-color: #18334C;
+  color: #FFF;
+  border: none;
+  border-radius: 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  align-self: flex-end;
+}
+
+.moreButton:hover{
+  opacity: 0.9;
+}
+
+.moreButton:active{
+  opacity: 0.8;
+}

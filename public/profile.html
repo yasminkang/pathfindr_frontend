@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - PathFindr</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-image: url(/layoutbg.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #000000;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            background-image: url(/layoutbg.png);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-sizing: border-box;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 22%; 
+            max-width: 380px; 
+            min-width: 280px; 
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            box-sizing: border-box; 
+            transition: width 0.3s ease; 
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebarSearchContainer {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            background-color: #192226;
+        }
+
+        .sidebarSearchContainer h3 {
+            width: 100%;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: 200;
+            font-style: italic;
+            letter-spacing: 0.7px;
+            margin: 0;
+        }
+
+        .navGroup {
+            margin-bottom: 1rem;
+        }
+
+        .groupTitle {
+            font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+            text-transform: uppercase;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+        }
+
+        .navList {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .navItem {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+            color: #fff;
+            font-size: clamp(0.9rem, 1.4vw, 1rem);
+            text-decoration: none;
+        }
+
+        .navItem:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .navIcon {
+            width: clamp(20px, 3vw, 24px);
+            height: clamp(20px, 3vw, 24px);
+            border-radius: 50%;
+        }
+
+        .navIcon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .premiumBtn {
+            padding: 0.875rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, rgba(214, 158, 180, .8) 21%, rgba(211, 211, 215, .8) 37%, rgba(133, 189, 211, .8) 64%,  rgba(36, 74, 101, .8) 97%);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            color: #ffffff;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .premiumBtn:hover {
+            background-color: #a0a0a0;
+        }
+
+        .placeholderBox {
+            width: 100%;
+            height: 220px;
+            border-radius: 0.8rem;
+            margin-top: 0.1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ProgressImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .progressTitle {
+            position: absolute;
+            bottom: 100px;
+            left: 16px;
+            color: #FFF;
+            font-size: 14px;
+            margin: 0;
+            z-index: 1;
+        }
+
+        .progressCourse {
+            position: absolute;
+            bottom: 30px; 
+            left: 16px; 
+            color: #F3F4F6; 
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0; 
+            z-index: 1; 
+        }
+
+        .progressBar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: absolute;
+            bottom: 10px;
+            left: 16px; 
+            z-index: 1;
+        }
+
+        .progressBackground {
+            width: 165px;
+            height: 8px;
+            background-color: #FFF;
+            border-radius: 20px;
+            padding: 0 2px;
+            margin-top: 2px;
+            overflow: hidden;
+        }
+
+        .progressFill {
+            width: 20px;
+            height: 4px;
+            background-color: #000;
+            border-radius: 20px;
+            margin-top: 2px;
+        }
+
+        .progressText {
+            color: #FFF;
+            font-size: 12px;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem;
+            margin-top: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+
+        /* Profile Container */
+        .profileContainer {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .profile3DContainer {
+            width: 100%;
+            height: 30vh;
+            border-radius: 26px;
+            background-color: #1e293b;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 3D Viewer Styles */
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        #canvas-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block !important;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.875rem;
+            z-index: 5;
+        }
+
+        .error {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            z-index: 5;
+        }
+
+        .error p {
+            margin-bottom: 0.5rem;
+        }
+
+        .error small {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 1rem;
+            z-index: 10;
+        }
+
+        .controls-left {
+            left: 1rem;
+        }
+
+        .controls-right {
+            right: 1rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 0.25rem;
+            justify-content: center;
+        }
+
+        .control-button {
+            padding: 0.5rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+            min-width: 40px;
+        }
+
+        .expand-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 20;
+            background: #FFF;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+        }
+
+        .expand-button:hover {
+            opacity: 0.8;
+        }
+
+        .expand-button img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .exit-fullscreen-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.438);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            display: none;
+        }
+
+        .exit-fullscreen-button:hover {
+            background-color: rgba(255, 255, 255, 0.295);
+        }
+
+        .progress-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: none;
+            pointer-events: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile3DContainer.fullscreen .progress-overlay {
+            display: flex;
+        }
+
+        .progress-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .profile3DContainer.fullscreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            border-radius: 18px;
+            background-color: #1e293b;
+        }
+        
+        main.fullscreen-mode {
+            position: relative;
+            height: calc(100vh - 2rem);
+            min-height: calc(100vh - 2rem);
+        }
+        
+        .profileContainer.fullscreen-mode {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .profileContainer {
+            position: relative;
+        }
+
+        main {
+            position: relative;
+        }
+
+        .control-button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .control-button:active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .zoom-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .zoom-button {
+            padding: 0.5rem 1rem;
+            min-width: 80px;
+        }
+
+        .rotate-button {
+            min-width: 60px;
+        }
+
+        .animation-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .animation-button {
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+
+        .animation-button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .animation-button:active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .animation-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .infocontainerP{
+            height: 65%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .profileboxP{
+            width: 18%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .infoboxP{
+            width: 28%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .skillsboxP{
+            width: 43%;
+            height: 100%;
+        }
+
+        .profileperfil{
+            background-image: url(/cloneProfile2.png);
+            background-size: cover;
+            border-radius: 20px;
+            width: 100%;
+            height: 250px;
+            display: flex;
+            justify-content: end;
+            padding: 0.5rem;
+        }
+        
+        .mindBtn{
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFF;
+        }
+
+        .mindIcon{
+            width: 25px;
+            height: 25px;
+        }
+
+        .progressbar{
+            width: 100%;
+            height: 22px;
+            background-color: #000000;
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .progresstxt{
+            color: #FFF;
+            font-size: 14px;
+        }
+
+        .descPhrase{
+            font-size: 18px;
+            font-weight: 500;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .editbox{
+            width: 100%;
+            height: 30vh;
+            display: flex;
+            align-items: flex-end;
+
+        }
+
+        .editButton{
+            width: 50px;
+            height: 50px;
+            background-color: #e9e9e9;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            margin-bottom: -15px;
+        }
+
+        .editicon{
+            width: 40px;
+            height: 40px;
+        }
+
+        .meBox{
+            height: 140px;
+            background-color: #e9e9e9;
+            padding: 1rem;
+            border-radius: 20px;
+        }
+
+        .meHi{
+            font-size: 16px;
+            font-style: italic;
+            color: #666666;
+        }
+
+        .meBox h3{
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .meBox h4{
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .tagP{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           border-radius: 20px;
+           width: 40%;
+            background-color: #000000;
+            margin-top: 10px;
+            padding: 4px 0;
+        }
+
+        .meTag{
+            color: #FFF;
+        }
+
+        .badgetsbox{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0.5rem;
+            margin-top: 10px;
+        }
+
+        .badgetsbox img{
+            width: 55px;
+            height: 55px;
+        }
+
+        .certifybox{
+            background-image: url(/certifyBG2.png);
+            background-size: cover;
+            height: 18.6vh;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0.5rem;
+        }
+
+        .certifybox h3{
+            width: 80%;
+            color: #FFF;
+            font-size: 22px;
+            font-weight: 500;
+            margin: 0.5rem 0 0 0.5rem ;
+        }
+
+        .avalBox{
+            display: flex;
+            flex-direction: row;
+            align-self: flex-end;
+        }
+
+        .avalBox img{
+            height: 30px;
+            width: 30px;
+        }
+
+        .skillTitle{
+            font-size: 22px;
+            letter-spacing: -1px;
+        }
+
+        .skillsbox{
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 10px;
+        }
+
+        .skillsbox p{
+            width: 100px;
+            font-size: 14px;
+        }
+
+        .barSKill{
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dotP{
+            width: 10px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP1{
+            width: 120px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP2{
+            width: 60px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP3{
+            width: 120px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP4{
+            width: 180px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP5{
+            width: 60px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP6{
+            width: 240px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP7{
+            width: 120px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP8{
+            width: 120px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP9{
+            width: 40px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barP10{
+            width: 60px;
+            height: 10px;
+            border-radius: 50px;
+        }
+
+        .barColor1{
+            background-color: #66F98D;
+            margin-top: 5px;
+        }
+
+        .barColor2{
+            background-color: #EB5353;
+            margin-top: 5px;
+        }
+
+        .barColor3{
+            background-color: #ffb429;
+            margin-top: 5px;
+        }
+
+        .barColor4{
+            background-color: #F18AF7;
+            margin-top: 5px;
+        }
+
+        .barColor5{
+            background-color: #7BA5FF;
+            margin-top: 5px;
+        }
+
+        .barColor6{
+            background-color: #F94794;
+            margin-top: 5px;
+        }
+
+        .barColor7{
+            background-color: #FF4B2B;
+            margin-top: 5px;
+        }
+
+        .barColor8{
+            background-color: #A6A6A6;
+            margin-top: 5px;
+        }
+
+        .barColor9{
+            background-color: #EAE200;
+            margin-top: 5px;
+        }
+
+        .barColor10{
+            background-color: #4C75CE;
+            margin-top: 5px;
+        }
+
+        .titleColor1{
+            color: #66F98D;
+        }
+
+        .titleColor2{
+            color: #EB5353;
+        }
+
+        .titleColor3{
+            color: #ffb429;
+        }
+
+        .titleColor4{
+            color: #F18AF7;
+        }
+
+        .titleColor5{
+            color: #7BA5FF;
+        }
+
+        .titleColor6{
+            color: #F94794;
+        }
+
+        .titleColor7{
+            color: #FF4B2B;
+        }
+
+        .titleColor8{
+            color: #A6A6A6;
+        }
+
+        .titleColor9{
+            color: #EAE200;
+        }
+
+        .titleColor10{
+            color: #4C75CE;
+        }
+
+        .highlightP{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .highlightP p{
+            color: #000000;
+            opacity: 0.8;
+        }
+
+        .highlightT{
+            margin: 16px 0 10px 0;
+        }
+    </style>
+</head>
+    <body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h1 class="logo">PathFindr</h1>
+            
+            <div class="sidebarSearchContainer">
+                <h3>Sua carreira evolui, nós garantimos a transição</h3>
+            </div>
+            
+            <div class="navGroup">
+                <h2 class="groupTitle">Explorar</h2>
+                <ul class="navList">
+                    <li>
+                        <a href="/home" class="navItem">
+                            <span class="navIcon">
+                                <img src="/images/HomeIcon.png" alt="Home" />
+                            </span>
+                            <span>Tela inicial</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="navItem">
+                            <span class="navIcon">
+                                <img src="/images/ProgressoIcon.png" alt="Progresso" />
+                            </span>
+                            <span>Seu Progresso</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="navItem">
+                            <span class="navIcon">
+                                <img src="/images/EcossistemaIcon.png" alt="Ecossistema" />
+                            </span>
+                            <span>Ecossistema</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="navGroup">
+                <h2 class="groupTitle">Conta</h2>
+                <ul class="navList">
+                    <li>
+                        <a href="/profile.html" class="navItem">
+                            <span class="navIcon">
+                                <img src="/images/ProfileIcon.png" alt="Perfil" />
+                            </span>
+                            <span>Perfil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="navItem">
+                            <span class="navIcon">
+                                <img src="/images/ConfigIcon.png" alt="Configurações" />
+                            </span>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/carrinho" class="navItem">
+                            <span class="navIcon">
+                                <img src="/images/CarrinhoIcon.png" alt="Carrinho" />
+                            </span>
+                            <span>Carrinho</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <a href="/planos" class="premiumBtn">Tenha premium</a>
+            
+            <div class="placeholderBox">
+                <img src="images/SidebarProgress.png" alt="Progresso" class="ProgressImg" />
+                <span class="progressTitle">Continuar de onde parou?</span>
+                <span class="progressCourse">IA Expertising Management</span>
+                <div class="progressBar">
+                    <div class="progressBackground">
+                        <div class="progressFill" style="width: 20px;"></div>
+                    </div>
+                    <span class="progressText">12%</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <div class="profileContainer">
+                <div class="profile3DContainer">
+                    <div id="canvas-container"></div>
+                    <div id="loading" class="loading" style="display: none;">Loading 3D model...</div>
+                    <div id="error" class="error" style="display: none;"></div>
+                    <button id="expand-btn" class="expand-button" onclick="enterFullscreen()">
+                        <img id="expand-img" src="/expandpath.png" alt="Expand to fullscreen" />
+                    </button>
+                    <button id="exit-fullscreen-btn" class="exit-fullscreen-button" onclick="exitFullscreenMode()" style="display: none;">
+                        Voltar
+                    </button>
+                    <div id="progress-overlay" class="progress-overlay">
+                        <img src="/3dprogress.png" alt="Progress" />
+                    </div>
+                </div>
+
+                
+                <div class="infocontainerP">
+                    <div class="profileboxP">
+                        <div>
+                        <div class="profileperfil">
+                        <div class="mindBtn"><img src="/mindPath.png" class="mindIcon"/></div>
+                        </div>
+                        <div class="progressbar"><p class="progresstxt">285/1.000xp</p></div>
+                        <h3 class="descPhrase">“Criando para o futuro, pensando sempre no seguinte...”</h3>
+                        </div>
+                        <div class="editbox">
+                        <div class="editButton">
+                            <img src="/editPath.png" class="editicon"/>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="infoboxP">
+                        <div class="meBox">
+                            <p class="meHi">Olá, eu sou...</p>
+                            <h3>Floris Épilis</h3>
+                            <h4>EXO-Designer | VR MultiPoly</h4>
+                            <div class="tagP"><p class="meTag">Veterano</p></div>
+                        </div>
+
+                        <div class="badgetsbox">
+                            <img src="/Badget1.png" alt="medalha de conquista"/>
+                            <img src="/Badget2.png" alt="medalha de conquista"/>
+                            <img src="/Badget3.png" alt="medalha de conquista"/>
+                            <img src="/Badget4.png" alt="medalha de conquista"/>
+                            <img src="/Badget5.png" alt="medalha de conquista"/>
+                            <img src="/Badget6.png" alt="medalha de conquista"/>
+                        </div>
+
+                        <div class="certifybox">
+                            <h3>10 certificados adquiridos</h3>
+                            <div class="avalBox">
+                                <img src="/avalPath.png" alt="avaliação em estrelas"/>
+                                <img src="/avalPath.png" alt="avaliação em estrelas"/>
+                                <img src="/avalPath.png" alt="avaliação em estrelas"/>
+                                <img src="/avalPath.png" alt="avaliação em estrelas"/>
+                                <img src="/avalPath.png" alt="avaliação em estrelas"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skillsboxP">
+                        <div>
+                            <h3 class="skillTitle">Habilidades profissionais</h3>
+                            <div class="skillsbox">
+                                <div class="barSKill">
+                                    <p class="titleColor1">Adaptabilidade</p> 
+                                    <div class="dotP barColor1"></div>
+                                    <div class="barP1 barColor1"></div>
+                                </div>
+                                
+                                <div class="barSKill">
+                                    <p class="titleColor2">Análise</p> 
+                                    <div class="dotP barColor2"></div>
+                                    <div class="barP2 barColor2"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor3">Comunicação</p> 
+                                    <div class="dotP barColor3"></div>
+                                    <div class="barP3 barColor3"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor4">Criatividade</p> 
+                                    <div class="dotP barColor4"></div>
+                                    <div class="barP4 barColor4"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor5">Disciplina</p> 
+                                    <div class="dotP barColor5"></div>
+                                    <div class="barP5 barColor5"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor6">Empatia</p> 
+                                    <div class="dotP barColor6"></div>
+                                    <div class="barP6 barColor6"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor7">Liderança</p> 
+                                    <div class="dotP barColor7"></div>
+                                    <div class="barP7 barColor7"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor8">Mediação</p> 
+                                    <div class="dotP barColor8"></div>
+                                    <div class="barP8 barColor8"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor9">Raciocínio</p> 
+                                    <div class="dotP barColor9"></div>
+                                    <div class="barP9 barColor9"></div>
+                                </div>
+
+                                <div class="barSKill">
+                                    <p class="titleColor10">Planejamento</p> 
+                                    <div class="dotP barColor10"></div>
+                                    <div class="barP10 barColor10"></div>
+                                </div>
+
+                               
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="skillTitle highlightT">Se destaca por</h3>
+                            <div class="highlightP">
+                            <p>• Alta capacidade de compreender e analisar diversas situaçoes;</p>
+                            <p>• Conhecimento teorico e prático, através de vivências únicas;</p>
+                            <p>• Capacidade de se adptar a qualquer ambiente de trabalho;</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Three.js and loaders from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script>
+        // Model URL
+        const MODEL_URL = 'https://raw.githubusercontent.com/NicolasFQ/3DPathFindr/c6432aa236aa682fe802904eea8054264324bc2b/xrnoe__human_nature_-_wiener_becken.glb';
+
+        // Global variables
+        let scene, camera, renderer, controls, model;
+        let mixer = null;
+        let animations = [];
+        let clock = null; // Will be initialized after THREE.js loads
+        let isPlaying = false;
+        // These will be initialized when DOM is ready
+        let container, loadingEl, errorEl, animationControlsEl;
+        
+        // Fixed camera configuration (locked values)
+        const FIXED_CAMERA_POSITION = { x: 4, y: 0, z: 9 };
+        const FIXED_CAMERA_TARGET = { x: -0.6, y: -1.9, z: -1 };
+        const FIXED_CAMERA_ZOOM = 13.0;
+        
+        // Track if we're in fullscreen mode to preserve zoom
+        let isFullscreenMode = false;
+
+        // Check WebGL support
+        function checkWebGLSupport() {
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                return !!gl;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Saturate image data (for background and textures)
+        function saturateImageData(imageData, saturation) {
+            const data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Convert to grayscale
+                const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+                
+                // Apply saturation and clamp to valid RGB range (0-255)
+                data[i] = Math.max(0, Math.min(255, gray + (r - gray) * saturation));
+                data[i + 1] = Math.max(0, Math.min(255, gray + (g - gray) * saturation));
+                data[i + 2] = Math.max(0, Math.min(255, gray + (b - gray) * saturation));
+            }
+            return imageData;
+        }
+
+        // Load background image with blur and saturation
+        function loadBackgroundImage() {
+            const img = new Image();
+            img.crossOrigin = 'anonymous'; // Allow loading from different origins if needed
+            
+            // Try different paths to find the image
+            const paths = ['/bg.jpg', './bg.jpg', 'bg.jpg', '../bg.jpg'];
+            let currentPathIndex = 0;
+            
+            function tryNextPath() {
+                if (currentPathIndex < paths.length) {
+                    img.src = paths[currentPathIndex];
+                    currentPathIndex++;
+                } else {
+                    console.warn('Failed to load background image from all paths, using default color');
+                }
+            }
+            
+            img.onload = function() {
+                // Create a canvas to apply saturation
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                
+                // Draw the image first
+                ctx.drawImage(img, 0, 0);
+                
+                // Get image data for saturation
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                
+                // Apply saturation (1.5 = 50% more saturated, 2.0 = 100% more saturated)
+                const saturatedData = saturateImageData(imageData, 1.5);
+                
+                // Put the saturated data back
+                ctx.putImageData(saturatedData, 0, 0);
+                
+                // Create a second canvas for blur
+                const blurCanvas = document.createElement('canvas');
+                blurCanvas.width = canvas.width;
+                blurCanvas.height = canvas.height;
+                const blurCtx = blurCanvas.getContext('2d');
+                
+                // Apply blur using canvas filter (if supported)
+                if (blurCtx.filter !== undefined) {
+                    blurCtx.filter = 'blur(1px)'; // Adjust blur amount
+                }
+                
+                // Draw the saturated image to the blur canvas
+                blurCtx.drawImage(canvas, 0, 0);
+                
+                // Create texture from blurred canvas
+                const texture = new THREE.CanvasTexture(blurCanvas);
+                texture.needsUpdate = true;
+                
+                // Set as scene background
+                if (scene) {
+                    scene.background = texture;
+                }
+            };
+            
+            img.onerror = function() {
+                // Try next path if available
+                if (currentPathIndex < paths.length) {
+                    tryNextPath();
+                } else {
+                    console.warn('Failed to load background image from all paths, using default color');
+                }
+            };
+            
+            // Start trying paths
+            tryNextPath();
+        }
+
+        // Initialize the scene
+        function init() {
+            // Get DOM elements
+            container = document.getElementById('canvas-container');
+            loadingEl = document.getElementById('loading');
+            errorEl = document.getElementById('error');
+            animationControlsEl = document.getElementById('animation-controls');
+            
+            // Hide loading message (loads automatically)
+            if (loadingEl) {
+                loadingEl.style.display = 'none';
+            }
+            
+            // Check if container exists
+            if (!container) {
+                console.error('Canvas container not found!');
+                return;
+            }
+            
+            // Check WebGL support
+            if (!checkWebGLSupport()) {
+                showError('WebGL is not supported in your browser.<br><small>Please update your graphics drivers or try a different browser.</small>');
+                return;
+            }
+
+            // Initialize clock after THREE.js is loaded
+            if (!clock && THREE && THREE.Clock) {
+                clock = new THREE.Clock();
+            }
+
+            // Camera is now FIXED - using locked values from global constants above
+
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1e293b);
+            
+            // Load background image with blur
+            loadBackgroundImage();
+
+            // Create camera with FIXED position and angle
+            camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            // Set camera zoom using fixed value
+            camera.zoom = FIXED_CAMERA_ZOOM;
+            camera.updateProjectionMatrix();
+            // Set camera position using fixed values
+            camera.position.set(FIXED_CAMERA_POSITION.x, FIXED_CAMERA_POSITION.y, FIXED_CAMERA_POSITION.z);
+            camera.lookAt(FIXED_CAMERA_TARGET.x, FIXED_CAMERA_TARGET.y, FIXED_CAMERA_TARGET.z);
+
+            // Create renderer with better texture support
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true, 
+                alpha: false,
+                powerPreference: 'high-performance',
+                preserveDrawingBuffer: false
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Enable shadow maps for better texture rendering
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.shadowMap.autoUpdate = true;
+            
+            // Enable tone mapping for better color/texture rendering
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.5; // Increased exposure for extreme vibrant colors
+            
+            container.appendChild(renderer.domElement);
+
+            // Add lights with shadows for better texture visibility
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight1.position.set(5, 5, 5);
+            directionalLight1.castShadow = true;
+            directionalLight1.shadow.mapSize.width = 2048;
+            directionalLight1.shadow.mapSize.height = 2048;
+            scene.add(directionalLight1);
+
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight2.position.set(-5, -5, -5);
+            scene.add(directionalLight2);
+
+            const pointLight = new THREE.PointLight(0xffffff, 0.5);
+            pointLight.position.set(0, 0, 5);
+            scene.add(pointLight);
+            
+            // Add hemisphere light for more natural lighting
+            const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.4);
+            scene.add(hemisphereLight);
+
+            // Add sun light from above (like sunlight shining down)
+            const sunLight = new THREE.DirectionalLight(0xfff8dc, 1.5); // Warm sunlight color
+            sunLight.position.set(0, 15, 0); // Position directly above the model
+            sunLight.castShadow = true;
+            sunLight.shadow.mapSize.width = 2048;
+            sunLight.shadow.mapSize.height = 2048;
+            sunLight.shadow.camera.near = 0.5;
+            sunLight.shadow.camera.far = 50;
+            sunLight.shadow.camera.left = -10;
+            sunLight.shadow.camera.right = 10;
+            sunLight.shadow.camera.top = 10;
+            sunLight.shadow.camera.bottom = -10;
+            sunLight.shadow.bias = -0.0001;
+            sunLight.shadow.radius = 4; // Soft shadow edges
+            scene.add(sunLight);
+            
+            // Add additional fill light for better shadow definition
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+            fillLight.position.set(-5, 10, -5);
+            fillLight.castShadow = false;
+            scene.add(fillLight);
+
+            // Add a ground plane to receive shadows (optional, for better shadow visibility)
+            const groundGeometry = new THREE.PlaneGeometry(20, 20);
+            const groundMaterial = new THREE.ShadowMaterial({ opacity: 0.3 });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -5; // Position below the model
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            // Create controls - DISABLED to keep view fixed
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enablePan = false;   // Disabled - view is fixed
+            controls.enableZoom = false;   // Disabled - view is fixed
+            controls.enableRotate = false; // Disabled - view is fixed
+            controls.enableDamping = false;
+            controls.enabled = false; // Completely disable controls
+            controls.target.set(FIXED_CAMERA_TARGET.x, FIXED_CAMERA_TARGET.y, FIXED_CAMERA_TARGET.z);
+            
+            // Set initial camera position from configuration (LOCKED)
+            camera.position.set(FIXED_CAMERA_POSITION.x, FIXED_CAMERA_POSITION.y, FIXED_CAMERA_POSITION.z);
+            camera.lookAt(FIXED_CAMERA_TARGET.x, FIXED_CAMERA_TARGET.y, FIXED_CAMERA_TARGET.z);
+
+            // Load the model
+            loadModel();
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+
+            // Start animation loop
+            animate();
+        }
+
+        // Load the 3D model
+        function loadModel() {
+            const loader = new THREE.GLTFLoader();
+            
+            // Enable texture loading
+            loader.setDRACOLoader(null); // Optional: for compressed models
+            
+            loader.load(
+                MODEL_URL,
+                function(gltf) {
+                    model = gltf.scene;
+
+                    // Enable shadows and saturate colors
+                    model.traverse(function(child) {
+                        if (child.isMesh) {
+                            // Enable shadows
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            
+                            // Ensure materials are properly set up for textures
+                            if (child.material) {
+                                // Handle array of materials
+                                const materials = Array.isArray(child.material) ? child.material : [child.material];
+                                materials.forEach(material => {
+                                    // Update textures
+                                    if (material.map) {
+                                        material.map.needsUpdate = true;
+                                    }
+                                    // Enable texture features
+                                    if (material.normalMap) {
+                                        material.normalMap.needsUpdate = true;
+                                    }
+                                    if (material.roughnessMap) {
+                                        material.roughnessMap.needsUpdate = true;
+                                    }
+                                    if (material.metalnessMap) {
+                                        material.metalnessMap.needsUpdate = true;
+                                    }
+                                    if (material.emissiveMap) {
+                                        material.emissiveMap.needsUpdate = true;
+                                    }
+                                    
+                                    // EXTREME saturation for material colors
+                                    if (material.color) {
+                                        // Increase saturation to maximum
+                                        const hsl = {};
+                                        material.color.getHSL(hsl);
+                                        // Extreme saturation - push to maximum (1.0)
+                                        hsl.s = Math.min(1.0, hsl.s * 3.0); // 3x saturation multiplier
+                                        // Also increase lightness slightly for more vibrant colors
+                                        hsl.l = Math.min(1.0, hsl.l * 1.1);
+                                        material.color.setHSL(hsl.h, hsl.s, hsl.l);
+                                    }
+                                    
+                                    // Saturate texture maps if they exist
+                                    if (material.map && material.map.image) {
+                                        const texture = material.map;
+                                        const img = texture.image;
+                                        
+                                        // Wait for image to load if needed
+                                        if (img.complete && img.naturalWidth > 0) {
+                                            // Create a canvas to saturate the texture
+                                            const canvas = document.createElement('canvas');
+                                            canvas.width = img.width;
+                                            canvas.height = img.height;
+                                            const ctx = canvas.getContext('2d');
+                                            
+                                            // Draw the original texture
+                                            ctx.drawImage(img, 0, 0);
+                                            
+                                            // Get image data and saturate it
+                                            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                                            const saturatedData = saturateImageData(imageData, 2.5); // Extreme saturation
+                                            ctx.putImageData(saturatedData, 0, 0);
+                                            
+                                            // Create new texture from saturated canvas
+                                            const saturatedTexture = new THREE.CanvasTexture(canvas);
+                                            saturatedTexture.needsUpdate = true;
+                                            saturatedTexture.wrapS = texture.wrapS;
+                                            saturatedTexture.wrapT = texture.wrapT;
+                                            saturatedTexture.repeat.copy(texture.repeat);
+                                            saturatedTexture.offset.copy(texture.offset);
+                                            material.map = saturatedTexture;
+                                        } else {
+                                            // If image not loaded yet, wait for it
+                                            img.onload = function() {
+                                                const canvas = document.createElement('canvas');
+                                                canvas.width = img.width;
+                                                canvas.height = img.height;
+                                                const ctx = canvas.getContext('2d');
+                                                ctx.drawImage(img, 0, 0);
+                                                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                                                const saturatedData = saturateImageData(imageData, 2.5);
+                                                ctx.putImageData(saturatedData, 0, 0);
+                                                const saturatedTexture = new THREE.CanvasTexture(canvas);
+                                                saturatedTexture.needsUpdate = true;
+                                                saturatedTexture.wrapS = texture.wrapS;
+                                                saturatedTexture.wrapT = texture.wrapT;
+                                                saturatedTexture.repeat.copy(texture.repeat);
+                                                saturatedTexture.offset.copy(texture.offset);
+                                                material.map = saturatedTexture;
+                                                material.needsUpdate = true;
+                                            };
+                                        }
+                                    }
+                                    
+                                    // Enhance emissive with extreme saturation (no glow effect)
+                                    if (material.emissive) {
+                                        const emissiveHsl = {};
+                                        material.emissive.getHSL(emissiveHsl);
+                                        emissiveHsl.s = Math.min(1.0, emissiveHsl.s * 3.0); // Extreme saturation
+                                        material.emissive.setHSL(emissiveHsl.h, emissiveHsl.s, emissiveHsl.l);
+                                    }
+                                    
+                                    // Adjust material properties for better lighting
+                                    if (material.metalness !== undefined) {
+                                        material.metalness = Math.min(1.0, material.metalness * 0.9);
+                                    }
+                                    if (material.roughness !== undefined) {
+                                        material.roughness = Math.max(0.1, material.roughness * 0.95);
+                                    }
+                                    
+                                    material.needsUpdate = true;
+                                });
+                            }
+                        }
+                    });
+
+                    // Calculate bounding box
+                    const box = new THREE.Box3();
+                    box.setFromObject(model);
+
+                    const center = new THREE.Vector3();
+                    box.getCenter(center);
+
+                    const size = new THREE.Vector3();
+                    box.getSize(size);
+
+                    // Calculate scale to fit the model nicely (scale to fit within 4 units)
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scale = maxDim > 0 ? 4 / maxDim : 1;
+
+                    // Apply scale to the model
+                    model.scale.set(scale, scale, scale);
+
+                    // Center the model at origin
+                    model.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+
+                    // Add model to scene
+                    scene.add(model);
+
+                    // Setup animations if they exist
+                    if (gltf.animations && gltf.animations.length > 0) {
+                        setupAnimations(gltf.animations);
+                    }
+
+                    // Hide loading
+                    if (loadingEl) {
+                        loadingEl.style.display = 'none';
+                    }
+                },
+                function(progress) {
+                    // Progress callback (optional)
+                    if (loadingEl && progress.total) {
+                        const percent = (progress.loaded / progress.total * 100);
+                        // Loading progress (hidden by default)
+                        // loadingEl.textContent = `Loading 3D model... ${Math.round(percent)}%`;
+                    }
+                },
+                function(error) {
+                    console.error('Error loading model:', error);
+                    showError('Failed to load 3D model.<br><small>Please check your internet connection.</small>');
+                }
+            );
+        }
+
+        // Setup animations
+        function setupAnimations(animationClips) {
+            if (!animationClips || animationClips.length === 0) return;
+
+            // Create animation mixer
+            mixer = new THREE.AnimationMixer(model);
+            animations = [];
+
+            // Create animation actions for all animations
+            animationClips.forEach((clip) => {
+                const action = mixer.clipAction(clip);
+                action.play();
+                animations.push(action);
+            });
+
+            // Hide animation controls (not needed - auto-playing)
+            if (animationControlsEl) {
+                animationControlsEl.style.display = 'none';
+            }
+
+            // Auto-play animations
+            isPlaying = true;
+            mixer.timeScale = 1.0; // Play at normal speed
+            console.log(`Loaded and auto-playing ${animationClips.length} animation(s)`);
+        }
+
+        // Toggle animation play/pause
+        function toggleAnimation() {
+            if (!mixer) return;
+
+            if (isPlaying) {
+                pauseAnimation();
+            } else {
+                playAnimation();
+            }
+        }
+
+        // Play animation
+        function playAnimation() {
+            if (!mixer) return;
+
+            // Resume all animation actions
+            animations.forEach(action => {
+                if (!action.isRunning()) {
+                    action.play();
+                }
+            });
+            mixer.timeScale = 1.0;
+            isPlaying = true;
+            updateAnimationButtons();
+        }
+
+        // Pause animation
+        function pauseAnimation() {
+            if (!mixer) return;
+
+            mixer.timeScale = 0;
+            isPlaying = false;
+            updateAnimationButtons();
+        }
+
+        // Stop animation
+        function stopAnimation() {
+            if (!mixer) return;
+
+            mixer.stopAllAction();
+            // Reset all animation actions to the beginning
+            animations.forEach(action => {
+                action.reset();
+            });
+            mixer.update(0);
+            isPlaying = false;
+            updateAnimationButtons();
+        }
+
+        // Update animation button states
+        function updateAnimationButtons() {
+            const playBtn = document.getElementById('play-btn');
+            const pauseBtn = document.getElementById('pause-btn');
+            
+            if (playBtn && pauseBtn) {
+                if (isPlaying) {
+                    playBtn.disabled = true;
+                    pauseBtn.disabled = false;
+                } else {
+                    playBtn.disabled = false;
+                    pauseBtn.disabled = false;
+                }
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (errorEl) {
+                errorEl.innerHTML = '<p>' + message + '</p>';
+                errorEl.style.display = 'block';
+            } else {
+                console.error('3D Viewer Error:', message);
+            }
+        }
+
+        // Handle window resize
+        function onWindowResize() {
+            if (!container || !camera || !renderer) return;
+            
+            const width = container.clientWidth || container.offsetWidth;
+            const height = container.clientHeight || container.offsetHeight;
+            
+            if (width > 0 && height > 0) {
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height, false);
+                
+                // Ensure canvas is visible
+                const canvas = renderer.domElement;
+                if (canvas) {
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                }
+            }
+        }
+        
+        // Add resize listener
+        window.addEventListener('resize', onWindowResize);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Get delta time (initialize clock if needed)
+            let delta = 0;
+            if (clock) {
+                delta = clock.getDelta();
+            } else if (THREE && THREE.Clock) {
+                clock = new THREE.Clock();
+                delta = clock.getDelta();
+            }
+            
+            // Update animation mixer
+            if (mixer && delta > 0) {
+                mixer.update(delta);
+            }
+            
+            // Keep camera fixed - lock position, target, and zoom
+            if (camera) {
+                camera.position.set(FIXED_CAMERA_POSITION.x, FIXED_CAMERA_POSITION.y, FIXED_CAMERA_POSITION.z);
+                camera.lookAt(FIXED_CAMERA_TARGET.x, FIXED_CAMERA_TARGET.y, FIXED_CAMERA_TARGET.z);
+                // Only reset zoom if not in fullscreen mode (preserve fullscreen zoom)
+                if (!isFullscreenMode) {
+                    camera.zoom = FIXED_CAMERA_ZOOM;
+                }
+                camera.updateProjectionMatrix();
+            }
+            
+            // Render scene
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+        
+        // Helper function to log current camera position (call this in browser console)
+        // Example: logCameraPosition()
+        window.logCameraPosition = function() {
+            if (camera && controls) {
+                console.log('=== CURRENT CAMERA POSITION ===');
+                console.log('Camera Position:');
+                console.log('  x:', camera.position.x.toFixed(2));
+                console.log('  y:', camera.position.y.toFixed(2));
+                console.log('  z:', camera.position.z.toFixed(2));
+                console.log('Camera Target:');
+                console.log('  x:', controls.target.x.toFixed(2));
+                console.log('  y:', controls.target.y.toFixed(2));
+                console.log('  z:', controls.target.z.toFixed(2));
+                console.log('Camera Zoom:');
+                console.log('  zoom:', camera.zoom.toFixed(2));
+                console.log('===============================');
+                return {
+                    position: {
+                        x: camera.position.x,
+                        y: camera.position.y,
+                        z: camera.position.z
+                    },
+                    target: {
+                        x: controls.target.x,
+                        y: controls.target.y,
+                        z: controls.target.z
+                    },
+                    zoom: camera.zoom
+                };
+            }
+        };
+
+        // Control handlers - disabled (view is fixed)
+        function handleMove(direction) {
+            // View is fixed - no movement allowed
+            return;
+        }
+
+        function handleZoom(direction) {
+            // View is fixed - no zoom allowed
+            return;
+        }
+
+        function handleRotate(direction) {
+            // View is fixed - no rotation allowed
+            return;
+        }
+
+        // Fullscreen functionality (expands within main container, not browser window)
+        function enterFullscreen() {
+            const container = document.querySelector('.profile3DContainer');
+            const exitBtn = document.getElementById('exit-fullscreen-btn');
+            const expandBtn = document.getElementById('expand-btn');
+            const main = document.querySelector('main');
+            
+            if (!container) {
+                console.error('Container not found');
+                return;
+            }
+            
+            // Add fullscreen class to expand within main container
+            container.classList.add('fullscreen');
+            const profileContainer = container.parentElement;
+            if (main) {
+                main.classList.add('fullscreen-mode');
+            }
+            if (profileContainer) {
+                profileContainer.classList.add('fullscreen-mode');
+            }
+            
+            // Mark as fullscreen mode
+            isFullscreenMode = true;
+            
+            // Show exit button, hide expand button
+            if (exitBtn) exitBtn.style.display = 'block';
+            if (expandBtn) expandBtn.style.display = 'none';
+            
+            // Resize renderer to expanded size - use requestAnimationFrame for better timing
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (!renderer || !camera || !container) {
+                        console.error('Missing required elements:', {
+                            renderer: !!renderer,
+                            camera: !!camera,
+                            container: !!container
+                        });
+                        return;
+                    }
+                    
+                    // Get the main element to calculate proper dimensions
+                    const mainEl = document.querySelector('main');
+                    const profileContainerEl = container.parentElement;
+                    
+                    // Calculate dimensions based on main container (not full viewport)
+                    const width = mainEl ? (mainEl.clientWidth || mainEl.offsetWidth) : (container.clientWidth || container.offsetWidth);
+                    const height = mainEl ? (mainEl.clientHeight || mainEl.offsetHeight) : (container.clientHeight || container.offsetHeight);
+                    
+                    console.log('=== FULLSCREEN DEBUG ===');
+                    console.log('Window dimensions:', window.innerWidth, 'x', window.innerHeight);
+                    console.log('Main element:', mainEl, mainEl ? (mainEl.clientWidth + 'x' + mainEl.clientHeight) : 'null');
+                    console.log('Profile container:', profileContainerEl, profileContainerEl ? (profileContainerEl.clientWidth + 'x' + profileContainerEl.clientHeight) : 'null');
+                    console.log('3D Container:', container, container.clientWidth + 'x' + container.clientHeight);
+                    console.log('Canvas element:', renderer.domElement);
+                    console.log('Canvas parent:', renderer.domElement.parentElement);
+                    console.log('Scene:', scene);
+                    console.log('Model:', model);
+                    
+                    if (width > 0 && height > 0) {
+                        // Update camera
+                        camera.aspect = width / height;
+                        
+                        // Zoom out in fullscreen mode (reduce zoom by 40%)
+                        const originalZoom = FIXED_CAMERA_ZOOM;
+                        camera.zoom = originalZoom * 0.6; // 40% zoom out for better view
+                        camera.updateProjectionMatrix();
+                        
+                        // Resize renderer
+                        renderer.setSize(width, height, false);
+                        
+                        // Ensure canvas is visible and properly styled
+                        const canvas = renderer.domElement;
+                        if (canvas) {
+                            canvas.style.width = width + 'px';
+                            canvas.style.height = height + 'px';
+                            canvas.style.display = 'block';
+                            canvas.style.position = 'absolute';
+                            canvas.style.top = '0';
+                            canvas.style.left = '0';
+                            canvas.style.zIndex = '1';
+                            canvas.style.backgroundColor = '#1e293b';
+                            console.log('Canvas styled:', canvas.style.width, 'x', canvas.style.height);
+                            console.log('Canvas computed style:', window.getComputedStyle(canvas).width, 'x', window.getComputedStyle(canvas).height);
+                        }
+                        
+                        // Ensure container has proper dimensions (only in fullscreen)
+                        if (isFullscreenMode) {
+                            container.style.width = width + 'px';
+                            container.style.height = height + 'px';
+                        }
+                        
+                        // Force a render
+                        if (scene && camera) {
+                            renderer.render(scene, camera);
+                            console.log('Scene rendered');
+                        } else {
+                            console.error('Scene or camera missing for render');
+                        }
+                        
+                        console.log('Renderer resized successfully to:', width, 'x', height);
+                    } else {
+                        console.error('Invalid dimensions:', width, 'x', height);
+                    }
+                    console.log('=== END DEBUG ===');
+                });
+            });
+        }
+
+        function exitFullscreenMode() {
+            const container = document.querySelector('.profile3DContainer');
+            const exitBtn = document.getElementById('exit-fullscreen-btn');
+            const expandBtn = document.getElementById('expand-btn');
+            const main = document.querySelector('main');
+            
+            if (!container) return;
+            
+            // Mark as not fullscreen mode first (before removing classes)
+            isFullscreenMode = false;
+            
+            // Remove fullscreen class
+            container.classList.remove('fullscreen');
+            const profileContainer = container.parentElement;
+            if (main) {
+                main.classList.remove('fullscreen-mode');
+            }
+            if (profileContainer) {
+                profileContainer.classList.remove('fullscreen-mode');
+            }
+            
+            // Clear any inline styles that were set during fullscreen
+            container.style.width = '';
+            container.style.height = '';
+            
+            // Hide exit button, show expand button
+            if (exitBtn) exitBtn.style.display = 'none';
+            if (expandBtn) expandBtn.style.display = 'block';
+            
+            // Resize renderer back to normal
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (renderer && camera && container) {
+                        // Force layout recalculation
+                        container.style.width = '';
+                        container.style.height = '';
+                        
+                        // Get the original container dimensions
+                        const width = container.clientWidth || container.offsetWidth;
+                        const height = container.clientHeight || container.offsetHeight;
+                        
+                        console.log('Exiting fullscreen - dimensions:', width, 'x', height);
+                        
+                        if (width > 0 && height > 0) {
+                            camera.aspect = width / height;
+                            
+                            // Restore original zoom when exiting fullscreen
+                            camera.zoom = FIXED_CAMERA_ZOOM;
+                            camera.updateProjectionMatrix();
+                            renderer.setSize(width, height, false);
+                            
+                            // Reset canvas styles
+                            const canvas = renderer.domElement;
+                            if (canvas) {
+                                canvas.style.width = '100%';
+                                canvas.style.height = '100%';
+                                canvas.style.position = '';
+                                canvas.style.top = '';
+                                canvas.style.left = '';
+                            }
+                            
+                            // Force a render
+                            if (scene && camera) {
+                                renderer.render(scene, camera);
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // Try to load expand button image with fallback paths
+        function loadExpandImage() {
+            const img = document.getElementById('expand-img');
+            if (!img) return;
+            
+            const paths = ['/expandpath.png', '/expandpath.png', '/expandpath.png'];
+            let currentPathIndex = 0;
+            
+            function tryNextPath() {
+                if (currentPathIndex < paths.length) {
+                    img.src = paths[currentPathIndex];
+                    currentPathIndex++;
+                }
+            }
+            
+            img.onerror = function() {
+                if (currentPathIndex < paths.length) {
+                    tryNextPath();
+                } else {
+                    console.warn('Failed to load expand button image');
+                }
+            };
+            
+            // Start with first path
+            tryNextPath();
+        }
+
+        // Try to load progress overlay image with fallback paths
+        function loadProgressImage() {
+            const progressOverlay = document.getElementById('progress-overlay');
+            if (!progressOverlay) return;
+            
+            const img = progressOverlay.querySelector('img');
+            if (!img) return;
+            
+            const paths = ['/3dprogress.png', '/3dprogress.png', '/3dprogress.png'];
+            let currentPathIndex = 0;
+            
+            function tryNextPath() {
+                if (currentPathIndex < paths.length) {
+                    img.src = paths[currentPathIndex];
+                    currentPathIndex++;
+                }
+            }
+            
+            img.onerror = function() {
+                if (currentPathIndex < paths.length) {
+                    tryNextPath();
+                } else {
+                    console.warn('Failed to load progress overlay image');
+                }
+            };
+            
+            // Start with first path
+            tryNextPath();
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            init();
+            loadExpandImage();
+            loadProgressImage();
+        });
+
+        // Handle navigation links to work within the same site
+        (function() {
+            function initNavigation() {
+                const navLinks = document.querySelectorAll('a.navItem, a.premiumBtn');
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    
+                    // Skip if it's a hash link, empty, or placeholder
+                    if (!href || href === '#' || href.startsWith('#')) {
+                        return;
+                    }
+                    
+                    // Only handle same-site navigation (absolute paths starting with /)
+                    if (href.startsWith('/') && !href.startsWith('//') && !href.startsWith('http')) {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            // Navigate within the same site
+                            window.location.href = href;
+                        });
+                    }
+                });
+            }
+            
+            // Initialize navigation when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initNavigation);
+            } else {
+                initNavigation();
+            }
+        })();
+    </script>
+</body>
+</html>
+

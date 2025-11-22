@@ -1,0 +1,426 @@
+.mainContent {
+  background-color: #fff;
+  min-height: 100vh;
+  position: relative;
+  padding: 1.5rem;
+  margin: 0;
+}
+
+.backBtn {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  z-index: 10;
+  width: 95px;
+  clip-path: inset(0.5px round 22px 22px);
+  background-color: #0d0d0d;
+  color: white;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.backBtn:hover {
+  background-color: #2b2b2b;
+}
+
+.courseLayout {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.courseMain {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Course Banner - Single Image (No Carousel) */
+.courseBanner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  clip-path: path("M70.25 56.5C85.852 56.5 98.5 43.852 98.5 28.25C98.5 12.648 111.148 0 126.75 0H576C593.673 0 608 14.3269 608 32V335C608 352.673 593.673 367 576 367H32C14.3269 367 0 352.673 0 335V88.5C0 70.8269 14.3269 56.5 32 56.5H70.25Z");
+}
+
+
+/* Course Info Section */
+.courseInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.courseHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.courseTitle {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.courseFeatures {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: #000;
+}
+
+.verifyIcon {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+}
+
+.priceSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+}
+
+.priceInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.installments {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.actionButtons {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.buyBtn {
+  width: 70%;
+  height: 65px;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  background-color: #537697;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: inherit;
+}
+
+.buyBtn:hover {
+  background-color: #81a4c5;
+}
+
+.cartBtn {
+  width: 30%;
+  height: 65px;
+  border-radius: 12px;
+  background-color: #18334C;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  padding: 0;
+}
+
+.cartBtn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.cartBtn:hover {
+  background-color: #0e3e6b;
+}
+
+/* Creator Section */
+.creatorSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.creatorInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.creatorLogo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.creatorName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 0.25rem 0;
+}
+
+.creatorRole {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.rating span {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Quote */
+.quote {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #000;
+  margin: 0;
+}
+
+/* Description Section */
+.descriptionSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+.descriptionText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+/* ODS Section */
+.odsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.odsText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+/* Attributes Section */
+.attributesSection {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.attributeBox {
+  flex: 1;
+  min-width: 150px;
+  padding: 1.5rem;
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.attributeLabel {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.attributeValue {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Suggestions Sidebar */
+.suggestionsSidebar {
+  width: 420px;
+  flex-shrink: 0;
+}
+
+.suggestionsTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 1.5rem 0;
+}
+
+.suggestedCourses {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.suggestedCard {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.suggestedCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.suggestedImage {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.suggestedInfo {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.suggestedTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.suggestedDuration {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.suggestedPrice {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .courseLayout {
+    flex-direction: column;
+  }
+
+  .suggestionsSidebar {
+    width: 100%;
+  }
+
+  .suggestedCourses {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .suggestedCard {
+    min-width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding: 1rem;
+  }
+
+  .courseBanner {
+    height: 300px;
+  }
+
+  .bannerText {
+    font-size: 2.5rem;
+  }
+
+  .bannerSubtext {
+    font-size: 1rem;
+  }
+
+  .courseTitle {
+    font-size: 2rem;
+  }
+
+  .priceSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .attributesSection {
+    flex-direction: column;
+  }
+
+  .attributeBox {
+    min-width: 100%;
+  }
+}

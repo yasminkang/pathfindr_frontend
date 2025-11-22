@@ -1,0 +1,66 @@
+.cardLink {
+  display: block;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #f0f0f0;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+}
+
+.cardImageContainer {
+  border: 12px solid #ffffff;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  height: 240px;
+}
+
+.durationBadge {
+  display: inline-block;
+  color: white;
+  font-size: 1rem;
+}
+
+.cardContent {
+  padding: 0 1rem .5rem;
+}
+
+.imageTextOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8)); /* 渐变背景，增强可读性 */
+  z-index: 2;
+}
+
+.cardTitle {
+  margin: 0 0 0.5rem;
+  font-size: 2.3rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.currentPrice {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #000;
+}

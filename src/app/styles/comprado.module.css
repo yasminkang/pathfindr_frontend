@@ -1,0 +1,86 @@
+.compradoContainer {
+  padding: 2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #000;
+}
+
+.coursesGrid {
+  display: flex;
+  gap: 2rem;
+  max-width: 620px;
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+}
+
+.courseCard {
+  width: 300px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: #f3f3f3;
+  border-radius: 16px;
+  padding: 0.5rem 1rem;
+}
+
+.courseImage {
+  width: 140px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.courseInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.courseName {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+}
+
+.courseDuration {
+  font-size: 14px;
+  color: #555;
+}
+
+.backButton {
+  width: 300px;
+  padding: 0.9rem 2.5rem;
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  background-image: url(/continueBTNBG.png);
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.2s;
+  align-self: center;
+  margin-top: 7rem;
+}
+
+.backButton:hover {
+  opacity: 0.9;
+}
+
