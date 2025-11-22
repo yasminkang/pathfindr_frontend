@@ -12,14 +12,86 @@ export default function Login(){
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+    const [erro, setErro] = useState('');
+    const [carregando, setCarregando] = useState(false);
    
-    function handleSubmit(e) {
-    e.preventDefault();
-    console.log('Email:', email);
-    console.log('Senha:', senha);
-    console.log('Confirmar Senha:', confirmarSenha);
-    router.push('/home');
-  }
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setErro('');
+        
+        // Validações
+        if (!email || !senha || !confirmarSenha) {
+            setErro('Por favor, preencha todos os campos');
+            return;
+        }
+
+        if (senha !== confirmarSenha) {
+            setErro('As senhas não coincidem');
+            return;
+        }
+
+        if (senha.length < 6) {
+            setErro('A senha deve ter pelo menos 6 caracteres');
+            return;
+        }
+
+        setCarregando(true);
+
+        try {
+            const response = await fetch('/api/auth/cadastrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email_usuario: email,
+                    senha_usuario: senha,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                setErro(data.error || 'Erro ao cadastrar. Tente novamente.');
+                setCarregando(false);
+                return;
+            }
+
+            // Cadastro bem-sucedido - fazer login automático
+            console.log('Usuário cadastrado:', data.data);
+            
+            // Após cadastro, fazer login automático
+            try {
+                const loginResponse = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email_usuario: email,
+                        senha_usuario: senha,
+                    }),
+                });
+
+                const loginData = await loginResponse.json();
+                if (loginResponse.ok && loginData.success && loginData.data) {
+                    localStorage.setItem('usuario', JSON.stringify(loginData.data));
+                    router.push('/home');
+                } else {
+                    setErro('Cadastro realizado, mas erro ao fazer login. Tente fazer login manualmente.');
+                    setCarregando(false);
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login automático:', error);
+                setErro('Cadastro realizado, mas erro ao fazer login. Tente fazer login manualmente.');
+                setCarregando(false);
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar:', error);
+            setErro('Erro ao conectar com o servidor. Tente novamente.');
+            setCarregando(false);
+        }
+    }
 
     return(
         <div className={styles.loginContainer}>
@@ -85,8 +157,19 @@ export default function Login(){
                     </div>
                     </div>
 
-                    <button type="submit" className={styles.cadastrarBtn}>
-                        <span className={styles.cadastrarText}>Cadastrar</span>
+                    {erro && (
+                        <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px', textAlign: 'center' }}>
+                            {erro}
+                        </div>
+                    )}
+                    <button 
+                        type="submit" 
+                        className={styles.cadastrarBtn}
+                        disabled={carregando}
+                    >
+                        <span className={styles.cadastrarText}>
+                            {carregando ? 'Cadastrando...' : 'Cadastrar'}
+                        </span>
                     </button>
 
                     <div className={styles.separator}>

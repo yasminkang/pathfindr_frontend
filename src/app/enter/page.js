@@ -9,17 +9,55 @@ export default function Enter(){
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [confirmarSenha, setConfirmarSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+    const [erro, setErro] = useState('');
+    const [carregando, setCarregando] = useState(false);
    
-    function handleSubmit(e) {
-    e.preventDefault();
-    console.log('Email:', email);
-    console.log('Senha:', senha);
-    console.log('Confirmar Senha:', confirmarSenha);
-    router.push('/home');
-  }
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setErro('');
+        
+        // Validações
+        if (!email || !senha) {
+            setErro('Por favor, preencha todos os campos');
+            return;
+        }
+
+        setCarregando(true);
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email_usuario: email,
+                    senha_usuario: senha,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                setErro(data.error || 'E-mail ou senha inválidos');
+                setCarregando(false);
+                return;
+            }
+
+            // Login bem-sucedido - salvar dados do usuário
+            if (data.data) {
+                localStorage.setItem('usuario', JSON.stringify(data.data));
+            }
+            
+            console.log('Login bem-sucedido:', data.data);
+            router.push('/home');
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+            setErro('Erro ao conectar com o servidor. Tente novamente.');
+            setCarregando(false);
+        }
+    }
 
     return(
         <div className={styles.loginContainer}>
@@ -65,8 +103,19 @@ export default function Enter(){
                     </div>
                     </div>
 
-                    <button type="submit" className={styles.cadastrarBtn}>
-                        <span className={styles.cadastrarText}>Entrar</span>
+                    {erro && (
+                        <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px', textAlign: 'center' }}>
+                            {erro}
+                        </div>
+                    )}
+                    <button 
+                        type="submit" 
+                        className={styles.cadastrarBtn}
+                        disabled={carregando}
+                    >
+                        <span className={styles.cadastrarText}>
+                            {carregando ? 'Entrando...' : 'Entrar'}
+                        </span>
                     </button>
 
                     <div className={styles.separator}>
