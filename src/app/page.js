@@ -1,28 +1,25 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function HomePage(){
+import styles from './styles/login.module.css'
+
+export default function Enter(){
     const router = useRouter();
-
-    // Redireciona para a página de login
-    useEffect(() => {
-        router.push('/enter');
-    }, [router]);
-
-    return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-            fontSize: '18px'
-        }}>
-            Redirecionando...
-        </div>
-    );
-}
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+   
+    function handleSubmit(e) {
+    e.preventDefault();
+    console.log('Email:', email);
+    console.log('Senha:', senha);
+    console.log('Confirmar Senha:', confirmarSenha);
+    router.push('/home');
+  }
 
     return(
         <div className={styles.loginContainer}>

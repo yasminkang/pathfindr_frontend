@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from '../styles/login.module.css'
@@ -9,82 +9,17 @@ export default function Enter(){
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [confirmarSenha, setConfirmarSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
-    const [erro, setErro] = useState('');
-    const [carregando, setCarregando] = useState(false);
-
-    // Redireciona se já estiver autenticado (apenas se houver dados válidos)
-    useEffect(() => {
-        // Só verifica no cliente
-        if (typeof window === 'undefined') return;
-        
-        const usuario = localStorage.getItem('usuario');
-        if (usuario) {
-            try {
-                const usuarioData = JSON.parse(usuario);
-                // Verificação mais rigorosa: precisa ter id_usuario E email_usuario
-                if (usuarioData && 
-                    usuarioData.id_usuario && 
-                    typeof usuarioData.id_usuario !== 'undefined' &&
-                    usuarioData.email_usuario) {
-                    // Usuário válido, pode redirecionar
-                    router.replace('/home');
-                } else {
-                    // Dados inválidos, limpar
-                    localStorage.removeItem('usuario');
-                }
-            } catch (error) {
-                // Erro ao parsear, limpar
-                localStorage.removeItem('usuario');
-            }
-        }
-    }, [router]);
+    const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
    
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setErro('');
-        
-        // Validações
-        if (!email || !senha) {
-            setErro('Por favor, preencha todos os campos');
-            return;
-        }
-
-        setCarregando(true);
-
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email_usuario: email,
-                    senha_usuario: senha,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok || !data.success) {
-                setErro(data.error || 'E-mail ou senha inválidos');
-                setCarregando(false);
-                return;
-            }
-
-            // Login bem-sucedido - salvar dados do usuário
-            if (data.data) {
-                localStorage.setItem('usuario', JSON.stringify(data.data));
-            }
-            
-            console.log('Login bem-sucedido:', data.data);
-            router.push('/home');
-        } catch (error) {
-            console.error('Erro ao fazer login:', error);
-            setErro('Erro ao conectar com o servidor. Tente novamente.');
-            setCarregando(false);
-        }
-    }
+    function handleSubmit(e) {
+    e.preventDefault();
+    console.log('Email:', email);
+    console.log('Senha:', senha);
+    console.log('Confirmar Senha:', confirmarSenha);
+    router.push('/home');
+  }
 
     return(
         <div className={styles.loginContainer}>
@@ -130,19 +65,8 @@ export default function Enter(){
                     </div>
                     </div>
 
-                    {erro && (
-                        <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px' }}>
-                            {erro}
-                        </div>
-                    )}
-                    <button 
-                        type="submit" 
-                        className={styles.cadastrarBtn}
-                        disabled={carregando}
-                    >
-                        <span className={styles.cadastrarText}>
-                            {carregando ? 'Entrando...' : 'Entrar'}
-                        </span>
+                    <button type="submit" className={styles.cadastrarBtn}>
+                        <span className={styles.cadastrarText}>Entrar</span>
                     </button>
 
                     <div className={styles.separator}>

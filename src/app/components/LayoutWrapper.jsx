@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 import Sidebar from './sidebar.jsx';
-import ProtectedRoute from './ProtectedRoute.jsx';
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
@@ -10,38 +9,34 @@ export default function LayoutWrapper({ children }) {
   const isEnterPage = pathname === '/enter';
   const isRootPage = pathname === '/';
 
-  // Páginas públicas (não precisam de autenticação)
   if (isLoginPage || isEnterPage || isRootPage) {
     return <>{children}</>;
   }
 
-  // Páginas protegidas (precisam de autenticação)
   return (
-    <ProtectedRoute>
-      <div style={{ 
-        display: 'flex', 
-        minHeight: '100vh',
-        backgroundImage: 'url(/layoutbg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        boxSizing: 'border-box'
+    <div style={{ 
+      display: 'flex', 
+      minHeight: '100vh',
+      backgroundImage: 'url(/layoutbg.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      boxSizing: 'border-box'
+    }}>
+      <Sidebar />
+      
+      <main style={{ 
+        flex: 1,
+        background: '#ffffff',
+        borderRadius: '1rem',
+        padding: '1rem',
+        margin: '1rem',
+        marginTop: '1rem',
+        boxShadow: '0 0 20px rgba(0,0,0,0.3)'
       }}>
-        <Sidebar />
-        
-        <main style={{ 
-          flex: 1,
-          background: '#ffffff',
-          borderRadius: '1rem',
-          padding: '1rem',
-          margin: '1rem',
-          marginTop: '1rem',
-          boxShadow: '0 0 20px rgba(0,0,0,0.3)'
-        }}>
-          {children}
-        </main>
-      </div>
-    </ProtectedRoute>
+        {children}
+      </main>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import styles from '../styles/login.module.css'
@@ -12,109 +12,14 @@ export default function Login(){
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
-    const [erro, setErro] = useState('');
-    const [carregando, setCarregando] = useState(false);
-
-    // Redireciona se já estiver autenticado (apenas se houver dados válidos)
-    useEffect(() => {
-        // Só verifica no cliente
-        if (typeof window === 'undefined') return;
-        
-        const usuario = localStorage.getItem('usuario');
-        if (usuario) {
-            try {
-                const usuarioData = JSON.parse(usuario);
-                // Verificação mais rigorosa: precisa ter id_usuario E email_usuario
-                if (usuarioData && 
-                    usuarioData.id_usuario && 
-                    typeof usuarioData.id_usuario !== 'undefined' &&
-                    usuarioData.email_usuario) {
-                    // Usuário válido, pode redirecionar
-                    router.replace('/home');
-                } else {
-                    // Dados inválidos, limpar
-                    localStorage.removeItem('usuario');
-                }
-            } catch (error) {
-                // Erro ao parsear, limpar
-                localStorage.removeItem('usuario');
-            }
-        }
-    }, [router]);
    
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setErro('');
-        
-        // Validações
-        if (!email || !senha || !confirmarSenha) {
-            setErro('Por favor, preencha todos os campos');
-            return;
-        }
-
-        if (senha !== confirmarSenha) {
-            setErro('As senhas não coincidem');
-            return;
-        }
-
-        if (senha.length < 6) {
-            setErro('A senha deve ter pelo menos 6 caracteres');
-            return;
-        }
-
-        setCarregando(true);
-
-        try {
-            const response = await fetch('/api/auth/cadastrar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email_usuario: email,
-                    senha_usuario: senha,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok || !data.success) {
-                setErro(data.error || 'Erro ao cadastrar. Tente novamente.');
-                setCarregando(false);
-                return;
-            }
-
-            // Cadastro bem-sucedido - fazer login automático
-            console.log('Usuário cadastrado:', data.data);
-            
-            // Após cadastro, fazer login automático
-            try {
-                const loginResponse = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email_usuario: email,
-                        senha_usuario: senha,
-                    }),
-                });
-
-                const loginData = await loginResponse.json();
-                if (loginResponse.ok && loginData.success && loginData.data) {
-                    localStorage.setItem('usuario', JSON.stringify(loginData.data));
-                }
-            } catch (error) {
-                console.error('Erro ao fazer login automático:', error);
-            }
-            
-            router.push('/home');
-        } catch (error) {
-            console.error('Erro ao cadastrar:', error);
-            setErro('Erro ao conectar com o servidor. Tente novamente.');
-            setCarregando(false);
-        }
-    }
+    function handleSubmit(e) {
+    e.preventDefault();
+    console.log('Email:', email);
+    console.log('Senha:', senha);
+    console.log('Confirmar Senha:', confirmarSenha);
+    router.push('/home');
+  }
 
     return(
         <div className={styles.loginContainer}>
@@ -180,19 +85,8 @@ export default function Login(){
                     </div>
                     </div>
 
-                    {erro && (
-                        <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px' }}>
-                            {erro}
-                        </div>
-                    )}
-                    <button 
-                        type="submit" 
-                        className={styles.cadastrarBtn}
-                        disabled={carregando}
-                    >
-                        <span className={styles.cadastrarText}>
-                            {carregando ? 'Cadastrando...' : 'Cadastrar'}
-                        </span>
+                    <button type="submit" className={styles.cadastrarBtn}>
+                        <span className={styles.cadastrarText}>Cadastrar</span>
                     </button>
 
                     <div className={styles.separator}>
